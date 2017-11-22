@@ -14,8 +14,14 @@ use Zttp\ZttpResponse;
 
 class ApiClient
 {
+    /** @var string */
     protected $apiEndPoint = 'https://api.pick.sa';
+    /** @var string */
+    protected $apiSandboxEndPoint = 'https://sandbox.pick.sa';
+    /** @var array */
     protected $headers = [];
+    /** @var bool */
+    protected $sandbox = false;
 
     public function __construct()
     {
@@ -138,5 +144,27 @@ class ApiClient
     public function patch(string $endPoint, array $params): ZttpResponse
     {
         return $this->request('patch', $endPoint, $params);
+    }
+
+    /**
+     * @param bool $sandbox
+     *
+     * @return ApiClient
+     */
+    public function setSandbox(bool $sandbox): ApiClient
+    {
+        $this->sandbox = $sandbox;
+
+        return $this;
+    }
+
+    /**
+     * get endpoint url.
+     *
+     * @return string
+     */
+    protected function getEndPoint(): string
+    {
+        return $this->sandbox ? $this->apiSandboxEndPoint : $this->apiEndPoint;
     }
 }

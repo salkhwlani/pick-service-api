@@ -19,6 +19,9 @@ class Orders
      */
     protected $client;
 
+    /**
+     * Orders constructor.
+     */
     public function __construct()
     {
         $this->client = new ApiClient();
@@ -28,5 +31,13 @@ class Orders
     {
         $order = new Order();
         dd($order->getData());
+    }
+
+    /**
+     * @return ApiClient
+     */
+    public function getClient(): ApiClient
+    {
+        return $this->client;
     }
 }
