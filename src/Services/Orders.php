@@ -21,23 +21,16 @@ class Orders
 
     /**
      * Orders constructor.
+     *
+     * @param ApiClient $client
      */
-    public function __construct()
+    public function __construct(ApiClient $client)
     {
-        $this->client = new ApiClient();
+        $this->client = $client;
     }
 
-    public function create()
+    public function create(Order $order)
     {
-        $order = new Order();
-        dd($order->getData());
-    }
-
-    /**
-     * @return ApiClient
-     */
-    public function getClient(): ApiClient
-    {
-        return $this->client;
+        return $this->client->post('orders/', $order->getModel());
     }
 }

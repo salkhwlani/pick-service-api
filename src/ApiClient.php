@@ -65,7 +65,10 @@ class ApiClient
      */
     protected function request(string $method, string $endPoint, array $params = []): ZttpResponse
     {
-        return Zttp::withHeaders($this->getHeaders())->{$method}($this->buildUrl($endPoint), $params);
+        return Zttp::withHeaders($this->getHeaders())
+            ->withoutRedirecting()
+            ->asJson()
+            ->{$method}($this->buildUrl($endPoint), $params);
     }
 
     /**
@@ -99,7 +102,17 @@ class ApiClient
      */
     protected function buildUrl($endPoint): string
     {
-        return $this->apiEndPoint . '/' . $endPoint;
+        return $this->getEndPoint() . '/' . $endPoint;
+    }
+
+    /**
+     * get endpoint url.
+     *
+     * @return string
+     */
+    protected function getEndPoint(): string
+    {
+        return $this->sandbox ? $this->apiSandboxEndPoint : $this->apiEndPoint;
     }
 
     /**
@@ -156,15 +169,5 @@ class ApiClient
         $this->sandbox = $sandbox;
 
         return $this;
-    }
-
-    /**
-     * get endpoint url.
-     *
-     * @return string
-     */
-    protected function getEndPoint(): string
-    {
-        return $this->sandbox ? $this->apiSandboxEndPoint : $this->apiEndPoint;
     }
 }

@@ -18,10 +18,14 @@ abstract class Model
 
     /** @var array */
     protected $rules = [];
+    /** @var array */
+    protected $fields = [];
 
     public function getModel()
     {
         $this->valid($this->getData(), $this->getRules());
+
+        return $this->getData();
     }
 
     /**
@@ -31,7 +35,21 @@ abstract class Model
      */
     public function getData(): array
     {
-        return \get_object_vars($this);
+        return collect(\get_object_vars($this))->filter(function ($value, $name) {
+            return \in_array($name, $this->getFields()) && !empty($value);
+        })->map(function ($value, $name) {
+            $methodName = camel_case('get_' . $name);
+
+            return \method_exists($this, $methodName) ? $this->$methodName() : $value;
+        })->toArray();
+    }
+
+    /**
+     * @return array
+     */
+    public function getFields(): array
+    {
+        return $this->fields;
     }
 
     /**

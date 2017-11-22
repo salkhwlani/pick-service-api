@@ -14,24 +14,56 @@ use Yemenifree\PickServices\Base\Model;
 
 class Order extends Model
 {
+    /**
+     * items types.
+     */
+    const ITEM_FOOD = 'food';
+    const ITEM_CLOTHING = 'clothing';
+    const ITEM_HOUSEHOLD = 'household';
+    const ITEM_ELECTRONICS = 'electronics';
+    const ITEM_HEALTH_CARE = 'health care';
+    const ITEM_MAKEUP = 'makeup';
+    const ITEM_OTHERS = 'other';
+
+    /**
+     * Payment types.
+     */
+    const PAYMENT_PRE_PAID = 'Pre-paid';
+    const PAYMENT_COD = 'COD';
+
+    /**
+     * Services types.
+     */
+    const SERVICE_ON_DEMAND = 'on-demand';
+    const SERVICE_ECONOMY = 'economy';
+    const SERVICE_SHIPPING = 'shipping';
+
+    /**
+     * @var array
+     */
     protected $rules = [
-        'delivery_notes' => 'required',
-        'price' => 'nullable|integer',
-        'service_type' => 'nullable|in:on-demand,economy,shipping',
+        'price' => 'present|numeric',
+        'service_type' => 'in:on-demand,economy,shipping',
         'payment_type' => 'required|in:Pre-paid,COD',
-        'items' => 'required',
+        'items' => 'required|in:food,clothing,household,electronics,health care,makeup,other',
         'receiver_name' => 'required',
         'receiver_phone' => 'required',
-        'pickup_time' => 'sometimes|date',
-        'dropoff_time' => 'sometimes|date',
+        'pickup_time' => 'required',
+        'pickup_location' => 'required',
+    ];
+
+    protected $fields = [
+        'delivery_notes', 'items', 'price', 'payment_type', 'service_type',
+        'receiver_name', 'receiver_phone', 'pickup_time', 'dropoff_time',
+        'dropoff_location', 'pickup_location', 'addons', 'dimensions',
     ];
 
     /** @var string */
-    protected $delivery_notes;
+    protected $delivery_notes = '';
     /** @var string */
-    protected $items;
+    protected $items = '';
     /** @var int (optional) */
-    protected $price;
+    protected $price = 0;
     /**
      * Payment type.
      *
@@ -50,25 +82,25 @@ class Order extends Model
      *
      * @var string
      */
-    protected $service_type;
+    protected $service_type = '';
     /** @var string */
-    protected $receiver_name;
+    protected $receiver_name = '';
     /** @var string */
-    protected $receiver_phone;
+    protected $receiver_phone = '';
 
     /** @var Carbon */
-    protected $pickup_time;
+    protected $pickup_time = '';
     /** @var Carbon */
-    protected $dropoff_time;
+    protected $dropoff_time = '';
     /** @var array */
-    protected $dropoff_location;
+    protected $dropoff_location = '';
     /** @var array */
-    protected $pickup_location;
+    protected $pickup_location = '';
 
     /** @var array */
-    protected $addons;
+    protected $addons = [];
     /** @var array */
-    protected $dimensions;
+    protected $dimensions = [];
 
     /**
      * @return string
@@ -238,7 +270,7 @@ class Order extends Model
      */
     public function getPickupTime(): string
     {
-        return $this->pickup_time->format('YYYY-mm-dd H:i A');
+        return $this->pickup_time ? $this->pickup_time->format('Y-m-d h:i A') : '';
     }
 
     /**
@@ -258,7 +290,7 @@ class Order extends Model
      */
     public function getDropoffTime(): string
     {
-        return $this->dropoff_time->format('YYYY-mm-dd H:i A');
+        return $this->dropoff_time ? $this->dropoff_time->format('Y-m-d h:i A') : '';
     }
 
     /**
@@ -278,7 +310,7 @@ class Order extends Model
      */
     public function getDropoffLocation(): string
     {
-        return \implode(',', $this->dropoff_location);
+        return \implode(',', (array) $this->dropoff_location);
     }
 
     /**
@@ -299,7 +331,7 @@ class Order extends Model
      */
     public function getPickupLocation(): string
     {
-        return \implode(',', $this->pickup_location);
+        return \implode(',', (array) $this->pickup_location);
     }
 
     /**
@@ -356,6 +388,6 @@ class Order extends Model
      */
     public function getAddons(): string
     {
-        return \implode(',', \array_unique($this->addons));
+        return \implode(',', \array_unique((array) $this->addons));
     }
 }
