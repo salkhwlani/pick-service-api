@@ -13,6 +13,11 @@
     "yemenifree/wordpress-validation": "dev-master",
     "nesbot/carbon": "^1.20"
   },
+  "autoload": {
+    "psr-4": {
+      "Yemenifree\\PickServices\\": "src/"
+    }
+  },
   "repositories": [
     {
       "type": "git",
