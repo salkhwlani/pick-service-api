@@ -1,0 +1,22 @@
+{
+  "name": "yemenifree/pick-service-api",
+  "description": "php implement for pick.sa service",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Salah Alkhwlani",
+      "email": "yemenifree@yandex.com"
+    }
+  ],
+  "require": {
+    "kitetail/zttp": "^0.3.0",
+    "yemenifree/wordpress-validation": "dev-master",
+    "nesbot/carbon": "^1.22"
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "git@gitlab.com:yemenifree/wordpress-validation.git"
+    }
+  ]
+}
