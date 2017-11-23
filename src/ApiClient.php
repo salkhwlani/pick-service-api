@@ -49,7 +49,7 @@ class ApiClient
      *
      * @return ZttpResponse
      */
-    public function post(string $endPoint, array $params): ZttpResponse
+    public function post(string $endPoint, array $params = []): ZttpResponse
     {
         return $this->request('post', $endPoint, $params);
     }
@@ -60,15 +60,20 @@ class ApiClient
      * @param string $method
      * @param string $endPoint
      * @param array  $params
+     * @param bool   $asJson
      *
      * @return ZttpResponse
      */
-    protected function request(string $method, string $endPoint, array $params = []): ZttpResponse
+    protected function request(string $method, string $endPoint, array $params = [], $asJson = true): ZttpResponse
     {
-        return Zttp::withHeaders($this->getHeaders())
-            ->withoutRedirecting()
-            ->asJson()
-            ->{$method}($this->buildUrl($endPoint), $params);
+        $request = Zttp::withHeaders($this->getHeaders())
+            ->withoutRedirecting();
+
+        if ($asJson === true) {
+            $request->asJson();
+        }
+
+        return $request->{$method}($this->buildUrl($endPoint), $params);
     }
 
     /**
@@ -121,9 +126,9 @@ class ApiClient
      *
      * @return ZttpResponse
      */
-    public function get(string $endPoint, array $params): ZttpResponse
+    public function get(string $endPoint, array $params = []): ZttpResponse
     {
-        return $this->request('get', $endPoint, $params);
+        return $this->request('get', $endPoint, $params, false);
     }
 
     /**
@@ -132,7 +137,7 @@ class ApiClient
      *
      * @return ZttpResponse
      */
-    public function delete(string $endPoint, array $params): ZttpResponse
+    public function delete(string $endPoint, array $params = []): ZttpResponse
     {
         return $this->request('delete', $endPoint, $params);
     }
