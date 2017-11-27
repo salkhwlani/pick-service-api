@@ -10,7 +10,6 @@
 namespace Yemenifree\PickServices\Base;
 
 use InvalidArgumentException;
-use Yemenifree\PickServices\Helpers\Str;
 use Yemenifree\Validation\Traits\HasValidator;
 
 abstract class Model
@@ -44,7 +43,7 @@ abstract class Model
         return collect(\get_object_vars($this))->filter(function ($value, $name) {
             return \in_array($name, $this->getFields()) && !empty($value);
         })->map(function ($value, $name) {
-            $methodName = Str::camel('get_' . $name);
+            $methodName = $this->getCamelMethodName($name);
 
             return \method_exists($this, $methodName) ? $this->$methodName() : $value;
         })->toArray();
@@ -58,6 +57,18 @@ abstract class Model
     public function getFields(): array
     {
         return $this->fields;
+    }
+
+    /**
+     * Get camel method name.
+     *
+     * @param $name
+     *
+     * @return string
+     */
+    protected function getCamelMethodName($name): string
+    {
+        return \lcfirst(\str_replace(' ', '', \ucwords(\str_replace(['-', '_'], ' ', 'get_' . $name))));
     }
 
     /**
