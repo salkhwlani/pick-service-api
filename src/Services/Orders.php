@@ -20,7 +20,7 @@ class Orders
      */
     protected $client;
     /**
-     * @var null
+     * @var int
      */
     private $merchantId;
 

@@ -138,7 +138,7 @@ class Order extends Model
      *
      * @return Order
      */
-    public function setDimensions(integer $width, int $length, int $weight, int $height): Order
+    public function setDimensions(int $width, int $length, int $weight, int $height): Order
     {
         $this->dimensions = ['width' => $width, 'length' => $length, 'weight' => $weight, 'height' => $height];
 
