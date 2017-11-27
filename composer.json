@@ -17,11 +17,5 @@
     "psr-4": {
       "Yemenifree\\PickServices\\": "src/"
     }
-  },
-  "repositories": [
-    {
-      "type": "git",
-      "url": "git@gitlab.com:yemenifree/wordpress-validation.git"
-    }
-  ]
+  }
 }
