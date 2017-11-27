@@ -23,12 +23,8 @@ class ApiClient
     /** @var bool */
     protected $sandbox = false;
 
-    public function __construct()
-    {
-    }
-
     /**
-     * set token for auth services.
+     * Set token for auth services.
      *
      * @param $token
      *
@@ -69,6 +65,7 @@ class ApiClient
         $request = Zttp::withHeaders($this->getHeaders())
             ->withoutRedirecting();
 
+        // if json except.
         if ($asJson === true) {
             $request->asJson();
         }
@@ -87,6 +84,8 @@ class ApiClient
     }
 
     /**
+     * Set headers of http  request.
+     *
      * @param array $headers
      *
      * @return $this
@@ -111,7 +110,7 @@ class ApiClient
     }
 
     /**
-     * get endpoint url.
+     * Get endpoint url.
      *
      * @return string
      */
@@ -121,6 +120,8 @@ class ApiClient
     }
 
     /**
+     * Process get request.
+     *
      * @param string $endPoint
      * @param array  $params
      *
@@ -132,6 +133,8 @@ class ApiClient
     }
 
     /**
+     * Process delete request.
+     *
      * @param string $endPoint
      * @param array  $params
      *
@@ -143,6 +146,8 @@ class ApiClient
     }
 
     /**
+     * Process put request.
+     *
      * @param string $endPoint
      * @param array  $params
      *
@@ -154,6 +159,8 @@ class ApiClient
     }
 
     /**
+     * Process patch request.
+     *
      * @param string $endPoint
      * @param array  $params
      *
@@ -165,6 +172,8 @@ class ApiClient
     }
 
     /**
+     * Enable sandbox.
+     *
      * @param bool $sandbox
      *
      * @return ApiClient
