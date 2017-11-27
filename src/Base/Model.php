@@ -21,6 +21,11 @@ abstract class Model
     /** @var array */
     protected $fields = [];
 
+    /**
+     * Valid current model & return data array.
+     *
+     * @return array
+     */
     public function getModel()
     {
         $this->valid($this->getData(), $this->getRules());
@@ -29,7 +34,7 @@ abstract class Model
     }
 
     /**
-     * get data of model.
+     * Get data of model.
      *
      * @return array
      */
@@ -45,6 +50,8 @@ abstract class Model
     }
 
     /**
+     * Get model fields.
+     *
      * @return array
      */
     public function getFields(): array
@@ -53,7 +60,7 @@ abstract class Model
     }
 
     /**
-     * get list of rules array.
+     * Get list of rules array.
      *
      * @return array
      */
@@ -63,6 +70,8 @@ abstract class Model
     }
 
     /**
+     * In valid function.
+     *
      * @param array $errors
      *
      * @throws InvalidArgumentException
@@ -73,6 +82,8 @@ abstract class Model
     }
 
     /**
+     * Set Rules of current model.
+     *
      * @param array $rules
      *
      * @return self
