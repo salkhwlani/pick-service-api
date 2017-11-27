@@ -1,6 +1,6 @@
 {
   "name": "yemenifree/pick-service-api",
-  "description": "php implement for pick.sa service",
+  "description": "This API client for pick.sa service. It is an **unofficial**",
   "type": "library",
   "authors": [
     {
