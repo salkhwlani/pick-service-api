@@ -10,7 +10,7 @@
   ],
   "require": {
     "kitetail/zttp": "^0.3.0",
-    "yemenifree/wordpress-validation": "dev-master",
+    "yemenifree/laravel-validation": "^0.0.3",
     "nesbot/carbon": "^1.20"
   },
   "autoload": {

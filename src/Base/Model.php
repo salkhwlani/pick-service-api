@@ -10,7 +10,8 @@
 namespace Yemenifree\PickServices\Base;
 
 use InvalidArgumentException;
-use Yemenifree\WordPressValidation\Traits\HasValidator;
+use Yemenifree\PickServices\Helpers\Str;
+use Yemenifree\Validation\Traits\HasValidator;
 
 abstract class Model
 {
@@ -43,7 +44,7 @@ abstract class Model
         return collect(\get_object_vars($this))->filter(function ($value, $name) {
             return \in_array($name, $this->getFields()) && !empty($value);
         })->map(function ($value, $name) {
-            $methodName = camel_case('get_' . $name);
+            $methodName = Str::camel('get_' . $name);
 
             return \method_exists($this, $methodName) ? $this->$methodName() : $value;
         })->toArray();
